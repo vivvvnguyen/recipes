@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Create Recipe</title>
+</head>
+<body>
+    <div class="container p-4 mx-auto col-9 bg-info-subtle">
+        <div class="row justify-content-between align-items-center">
+            <h1 class="col text-info text-start">Add a new Recipe!</h1>
+            <div class="col text-end">
+                <a href="/success" class="col btn btn-primary">Back to Recipes</a>
+                <a href="/logout" class="col btn btn-secondary">Logout</a>
+            </div>
+        </div>
+        <div>
+            {% with messages = get_flashed_messages(category_filter=['recipe']) %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <form action="/process/create" method="post" class="d-flex text-start">
+            <div class="col m-1 p-2">
+                <div class="form-group">
+                    <label for="name" class="form-label">Name: </label>
+                    <input type="text" class="form-control" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="description" class="form-label">Description: </label>
+                    <input type="text" class="form-control" name="description">
+                </div>
+                <div class="form-group">
+                    <label for="instructions" class="form-label">Instructions: </label>
+                    <input type="text" class="form-control" name="instructions">
+                </div>
+            </div>
+            <div class="col m-1 p-2">
+                <div class="form-group">
+                    <label for="date_cooked" class="form-label">Date Cooked/Made: </label>
+                    <input type="date" class="form-control" name="date_cooked">
+                    
+                </div>
+                <div class="form-group">
+                    <label for="under_30" class="form-label">Under 30 Minutes?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="under_30" value="1">
+                        <label for="under_30" class="form-check-label">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="under_30" value="0">
+                        <label for="under_30" class="form-check-label">No</label>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

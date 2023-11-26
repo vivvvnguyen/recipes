@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Recipes Dashboard</title>
+</head>
+<body>
+    <div class="card p-3 mx-auto col-9 bg-success-subtle">
+        <div class="card-header">
+            <h1 class="text-start text-success">Welcome, {{user.first_name}}</h1>
+            <div class="row justify-content-between">
+                <p class="col text-start fs-3">All Posted Recipes:</p>
+                <div class="col text-end">
+                    <a href="/create" class="col btn btn-primary">Create Recipe</a>
+                    <a href="/logout" class="col btn btn-secondary">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body text-center">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Under 30 Mins</th>
+                        <th scope="col">Posted By</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for one_recipe in all_recipes %}
+                        <tr>
+                            <td>{{one_recipe.name}}</td>
+                            <td>
+                                {% if one_recipe.under_30 == 1 %}
+                                    Yes
+                                {% else %}
+                                    No 
+                                {% endif %}
+                            </td>
+                            <td>{{one_recipe.creator.first_name}}</td>
+                            <td>
+                                <a href="/recipe/show/{{one_recipe.id}}" class="btn btn-success">View Recipe</a>
+                                {# <!-- Can only Edit/Delete if user is creator of recipe --> #}
+                                {% if session['user_id'] == one_recipe.creator.id %}
+                                    <a href="/recipe/edit/{{one_recipe.id}}" class="btn btn-success">Edit</a>
+                                    <a href="/recipe/delete/{{one_recipe.id}}" class="btn btn-success">Delete</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
